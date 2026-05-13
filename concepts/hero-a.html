@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Farizon SV — Hero concept A · Diagonal industrial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    img, svg { display: block; max-width: 100%; height: auto; }
+    button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    :root {
+      --navy: #0B1426;
+      --navy-2: #1A2B45;
+      --navy-line: rgba(255,255,255,.12);
+      --ink: #0E1A2B;
+      --ink-muted: #6B7280;
+      --line: #E5E7EB;
+      --bg-soft: #F5F7FA;
+      --cta: #16A34A;
+      --cta-hover: #14883E;
+      --accent: #FF6B1A;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: var(--navy);
+      color: #fff;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 13px;
+      letter-spacing: .02em;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      z-index: 5;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-inline: clamp(20px, 4vw, 48px);
+    }
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-block: 18px;
+    }
+    .site-header__logo img { height: 28px; width: auto; }
+    .site-header__nav {
+      display: flex;
+      gap: 32px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .site-header__nav a { color: var(--ink); transition: color .15s; }
+    .site-header__nav a:hover { color: var(--cta); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      letter-spacing: -.005em;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 14px;
+      background: var(--cta);
+      color: #fff;
+      transition: background .18s, transform .18s, box-shadow .18s;
+      box-shadow: 0 4px 14px rgba(22,163,74,.28);
+    }
+    .btn:hover { background: var(--cta-hover); transform: translateY(-1px); }
+    .btn--lg {
+      padding: 16px 24px;
+      font-size: 16px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(22,163,74,.32);
+    }
+
+    /* HERO A — DIAGONAL INDUSTRIAL */
+    .hero-a {
+      position: relative;
+      background: var(--navy);
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero-a__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 620px;
+      position: relative;
+    }
+    .hero-a__copy {
+      padding: 80px clamp(24px, 4vw, 60px) 120px clamp(24px, 6vw, 80px);
+      max-width: 720px;
+      justify-self: end;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-a__kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #7EE5A0;
+      margin-bottom: 28px;
+    }
+    .hero-a__kicker::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--cta);
+    }
+    .hero-a__h1 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 1.5rem + 3.8vw, 4.6rem);
+      line-height: .98;
+      letter-spacing: -.035em;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+    .hero-a__h1 em {
+      font-style: normal;
+      color: var(--cta);
+      display: inline-block;
+    }
+    .hero-a__sub {
+      font-size: 17px;
+      color: rgba(255,255,255,.78);
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+    .hero-a__sub strong { color: #fff; font-weight: 600; }
+    .hero-a__bullets {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 40px;
+      font-size: 15px;
+    }
+    .hero-a__bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: rgba(255,255,255,.92);
+    }
+    .hero-a__bullets svg {
+      flex-shrink: 0;
+      color: var(--cta);
+      margin-top: 3px;
+    }
+    .hero-a__cta-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: rgba(255,255,255,.55);
+    }
+
+    /* visual half */
+    .hero-a__visual {
+      position: relative;
+      background:
+        linear-gradient(135deg, var(--navy-2) 0%, var(--navy) 100%);
+      overflow: hidden;
+    }
+    .hero-a__visual::before {
+      /* diagonal mask: the navy intrudes into the image area */
+      content: "";
+      position: absolute;
+      top: -10%;
+      left: -8%;
+      width: 50%;
+      height: 120%;
+      background: var(--navy);
+      transform: skewX(-12deg);
+      transform-origin: top left;
+      z-index: 1;
+    }
+    .hero-a__image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-46%, -50%);
+      width: 115%;
+      max-width: none;
+      height: auto;
+      z-index: 2;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,.4));
+    }
+
+    /* corner stamp - subtle metric label, top-right of image area */
+    .hero-a__stamp {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      z-index: 3;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 8px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* PRICE STRIP — bottom band, spans full width */
+    .price-strip {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .price-strip__inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+    }
+    .price-strip__cell {
+      padding: 22px 28px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .price-strip__cell:last-child { border-right: 0; }
+    .price-strip__cell--cta { background: var(--bg-soft); }
+    .price-strip__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .price-strip__value {
+      font-family: 'Manrope', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--ink);
+    }
+    .price-strip__value em {
+      font-style: normal;
+      color: var(--cta);
+    }
+    .price-strip__note {
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+    .price-strip__cta {
+      align-self: center;
+      justify-self: start;
+    }
+
+    /* MOBILE */
+    @media (max-width: 880px) {
+      .site-header__nav { display: none; }
+      .hero-a__grid { grid-template-columns: 1fr; min-height: auto; }
+      .hero-a__copy { padding: 60px 24px 32px; justify-self: stretch; max-width: none; }
+      .hero-a__visual { height: 280px; }
+      .hero-a__visual::before { display: none; }
+      .hero-a__image { width: 90%; transform: translate(-50%, -50%); }
+      .price-strip__inner { grid-template-columns: 1fr 1fr; }
+      .price-strip__cell { border-right: 0; border-bottom: 1px solid var(--line); }
+      .price-strip__cell:nth-child(odd) { border-right: 1px solid var(--line); }
+    }
+
+    /* concept label */
+    .concept-label {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 99;
+      background: rgba(11,20,38,.92);
+      color: #7EE5A0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+  </style>
+</head>
+<body>
+  <div class="concept-label">Concept A · Diagonal industrial</div>
+
+  <div class="topbar">Prueba sin compromiso para profesionales — Plazas limitadas por concesionario</div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="#" class="site-header__logo" aria-label="Farizon">
+        <img src="../assets/farizon-logo-black.webp" alt="Farizon">
+      </a>
+      <nav class="site-header__nav" aria-label="Navegación principal">
+        <a href="#">Características</a>
+        <a href="#">Comparativa</a>
+        <a href="#">Opiniones</a>
+        <a href="#">Preguntas</a>
+      </nav>
+      <button class="btn">
+        Pruébala gratis
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero-a">
+    <div class="hero-a__grid">
+      <div class="hero-a__copy">
+        <p class="hero-a__kicker">100% eléctrica · Geely Holding</p>
+        <h1 class="hero-a__h1">
+          Más <em>autonomía.</em><br>
+          Más <em>carga.</em><br>
+          Cero <em>gasolineras.</em>
+        </h1>
+        <p class="hero-a__sub">
+          Farizon SuperVan: la furgoneta 100% eléctrica de <strong>Geely Holding</strong>. Distribuida en España por Salvador Caetano.
+        </p>
+        <ul class="hero-a__bullets">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hasta 376&nbsp;km WLTP (479 km urbana)</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hasta 1.465&nbsp;kg de carga útil · 13 m³</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Equipamiento completo de serie · Euro NCAP Platino</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Etiqueta CERO · 8 años de garantía en batería</li>
+        </ul>
+        <p class="hero-a__cta-note">El precio y CTA están en la banda inferior ↓</p>
+      </div>
+
+      <div class="hero-a__visual">
+        <span class="hero-a__stamp">SV · L1H1</span>
+        <img src="../assets/hero.webp" alt="Farizon SuperVan" class="hero-a__image">
+      </div>
+    </div>
+
+    <div class="price-strip">
+      <div class="price-strip__inner">
+        <div class="price-strip__cell">
+          <span class="price-strip__label">Desde</span>
+          <span class="price-strip__value">26.800&nbsp;<em>€</em><sup style="font-size:14px;color:var(--ink-muted)">*</sup></span>
+          <span class="price-strip__note">Plan MOVES III incluido</span>
+        </div>
+        <div class="price-strip__cell">
+          <span class="price-strip__label">Autonomía</span>
+          <span class="price-strip__value">376&nbsp;km</span>
+          <span class="price-strip__note">WLTP combinada · 479 urbana</span>
+        </div>
+        <div class="price-strip__cell">
+          <span class="price-strip__label">Carga útil</span>
+          <span class="price-strip__value">1.465&nbsp;kg</span>
+          <span class="price-strip__note">y hasta 13 m³ en L3H3</span>
+        </div>
+        <div class="price-strip__cell price-strip__cell--cta">
+          <button class="btn btn--lg price-strip__cta">
+            Pruébala gratis en tu zona
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

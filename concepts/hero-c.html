@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Farizon SV — Hero concept C · Cinematic full-bleed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    img, svg { display: block; max-width: 100%; height: auto; }
+    button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    :root {
+      --ink: #0E1A2B;
+      --ink-muted: #6B7280;
+      --line: #E5E7EB;
+      --cta: #16A34A;
+      --cta-hover: #14883E;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      background: #000;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 13px;
+      letter-spacing: .02em;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* HEADER — transparent over hero */
+    .site-header {
+      background: transparent;
+      position: absolute;
+      top: 33px;
+      left: 0;
+      right: 0;
+      z-index: 5;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-inline: clamp(20px, 4vw, 56px);
+    }
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-block: 18px;
+    }
+    .site-header__logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1); /* logo in white over photo */
+    }
+    .site-header__nav {
+      display: flex;
+      gap: 32px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+    }
+    .site-header__nav a { color: rgba(255,255,255,.85); transition: color .15s; }
+    .site-header__nav a:hover { color: #fff; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      letter-spacing: -.005em;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 14px;
+      background: var(--cta);
+      color: #fff;
+      transition: background .18s, transform .18s, box-shadow .18s;
+      box-shadow: 0 4px 14px rgba(22,163,74,.36);
+    }
+    .btn:hover { background: var(--cta-hover); transform: translateY(-1px); }
+    .btn--lg {
+      padding: 18px 30px;
+      font-size: 17px;
+      border-radius: 10px;
+      box-shadow: 0 8px 28px rgba(22,163,74,.45);
+    }
+
+    /* HERO C — CINEMATIC FULL-BLEED */
+    .hero-c {
+      position: relative;
+      min-height: 720px;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero-c__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      z-index: 1;
+    }
+    .hero-c__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,.0) 50%, rgba(0,0,0,.85) 92%, rgba(0,0,0,.95) 100%),
+        linear-gradient(to right, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 45%, transparent 100%);
+    }
+
+    .hero-c__inner {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 720px;
+      padding: 140px clamp(20px, 4vw, 56px) 56px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .hero-c__copy {
+      max-width: 640px;
+    }
+    .hero-c__kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #7EE5A0;
+      margin-bottom: 28px;
+    }
+    .hero-c__kicker::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--cta);
+    }
+    .hero-c__h1 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 1.5rem + 4.5vw, 5.2rem);
+      line-height: .98;
+      letter-spacing: -.035em;
+      color: #fff;
+      margin-bottom: 26px;
+    }
+    .hero-c__h1 em {
+      font-style: italic;
+      font-weight: 600;
+      color: #7EE5A0;
+    }
+    .hero-c__sub {
+      font-size: 18px;
+      line-height: 1.5;
+      color: rgba(255,255,255,.82);
+      max-width: 540px;
+      margin-bottom: 36px;
+    }
+    .hero-c__sub strong { color: #fff; font-weight: 600; }
+
+    .hero-c__cta-row {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .hero-c__price-block {
+      color: rgba(255,255,255,.88);
+    }
+    .hero-c__price-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 4px;
+    }
+    .hero-c__price-value {
+      font-family: 'Manrope', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.02em;
+      color: #fff;
+    }
+    .hero-c__price-note {
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      margin-top: 4px;
+    }
+    .hero-c__cta-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: rgba(255,255,255,.55);
+      width: 100%;
+    }
+
+    /* BOTTOM TICKER — quick stats strip on the very bottom */
+    .hero-c__ticker {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 4;
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.1);
+      color: #fff;
+    }
+    .hero-c__ticker-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0 clamp(20px, 4vw, 56px);
+    }
+    .hero-c__ticker-cell {
+      padding: 18px 16px;
+      border-right: 1px solid rgba(255,255,255,.1);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hero-c__ticker-cell:last-child { border-right: 0; }
+    .hero-c__ticker-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+    }
+    .hero-c__ticker-value {
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.015em;
+      color: #fff;
+    }
+
+    @media (max-width: 880px) {
+      .site-header__nav { display: none; }
+      .hero-c { min-height: 640px; }
+      .hero-c__inner { min-height: 640px; padding: 120px 20px 120px; }
+      .hero-c__ticker-inner { grid-template-columns: 1fr 1fr; }
+      .hero-c__ticker-cell { padding: 12px 14px; }
+      .hero-c__ticker-cell:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.1); }
+      .hero-c__ticker-cell:nth-child(even) { border-right: 0; }
+      .hero-c__ticker-cell:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.1); }
+    }
+
+    .concept-label {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 99;
+      background: rgba(0,0,0,.78);
+      color: #7EE5A0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+  </style>
+</head>
+<body>
+  <div class="concept-label">Concept C · Cinematic full-bleed</div>
+
+  <div class="topbar">Prueba sin compromiso para profesionales — Plazas limitadas por concesionario</div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="#" class="site-header__logo" aria-label="Farizon">
+        <img src="../assets/farizon-logo-black.webp" alt="Farizon">
+      </a>
+      <nav class="site-header__nav" aria-label="Navegación principal">
+        <a href="#">Características</a>
+        <a href="#">Comparativa</a>
+        <a href="#">Opiniones</a>
+        <a href="#">Preguntas</a>
+      </nav>
+      <button class="btn">
+        Pruébala gratis
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero-c">
+    <img src="../assets/hero.webp" alt="" class="hero-c__photo" fetchpriority="high">
+    <div class="hero-c__overlay"></div>
+
+    <div class="hero-c__inner">
+      <div class="hero-c__copy">
+        <p class="hero-c__kicker">100% eléctrica · Geely Holding</p>
+        <h1 class="hero-c__h1">
+          Más autonomía.<br>
+          Más carga.<br>
+          <em>Cero gasolineras.</em>
+        </h1>
+        <p class="hero-c__sub">
+          Farizon SuperVan: la furgoneta 100% eléctrica con el mejor ratio <strong>autonomía / carga / equipamiento</strong> de su categoría. Distribuida en España por Salvador Caetano.
+        </p>
+        <div class="hero-c__cta-row">
+          <button class="btn btn--lg">
+            Pruébala gratis en tu zona
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          <div class="hero-c__price-block">
+            <div class="hero-c__price-label">Desde</div>
+            <div class="hero-c__price-value">26.800&nbsp;€*</div>
+            <div class="hero-c__price-note">Plan MOVES III incluido</div>
+          </div>
+          <p class="hero-c__cta-note">Sin compromiso · Te llamamos en menos de 24 h · 7 concesionarios oficiales en España.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-c__ticker">
+      <div class="hero-c__ticker-inner">
+        <div class="hero-c__ticker-cell">
+          <span class="hero-c__ticker-label">Autonomía</span>
+          <span class="hero-c__ticker-value">Hasta 376 km WLTP</span>
+        </div>
+        <div class="hero-c__ticker-cell">
+          <span class="hero-c__ticker-label">Carga útil</span>
+          <span class="hero-c__ticker-value">Hasta 1.465 kg · 13 m³</span>
+        </div>
+        <div class="hero-c__ticker-cell">
+          <span class="hero-c__ticker-label">Seguridad</span>
+          <span class="hero-c__ticker-value">Euro NCAP Platino · +30 ADAS</span>
+        </div>
+        <div class="hero-c__ticker-cell">
+          <span class="hero-c__ticker-label">Garantía</span>
+          <span class="hero-c__ticker-value">5 años · 8 años batería</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
