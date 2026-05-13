@@ -463,17 +463,63 @@ main > section { padding-block: clamp(var(--s-8), 6vw, var(--s-10)); }
   color: #fff;
 }
 
+/* MOBILE — apilado: foto arriba (muestra el modelo), copy + ticker en navy debajo */
 @media (max-width: 880px) {
-  .hero { min-height: 620px; }
-  .hero__inner { min-height: 620px; padding: 120px 0 130px; padding-inline: var(--container-px); }
-  .hero__h1 { font-size: clamp(2.1rem, 6vw + 1rem, 3rem); }
-  .hero__sub { margin-bottom: 26px; }
-  .hero__ticker-inner { grid-template-columns: 1fr 1fr; }
-  .hero__ticker-cell { padding: 12px 14px; }
+  .hero {
+    min-height: auto;
+    background: var(--color-brand-navy);
+    display: flex;
+    flex-direction: column;
+  }
+  .hero__photo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 62% 50%; /* centra la furgoneta dentro del recorte */
+  }
+  .hero__overlay {
+    display: none; /* en móvil la copy no va overlay, va debajo */
+  }
+  .hero__inner {
+    position: relative;
+    min-height: auto;
+    padding: 32px var(--container-px) 28px;
+    margin: 0;
+    max-width: none;
+    background: var(--color-brand-navy);
+  }
+  .hero__h1 {
+    font-size: clamp(2rem, 7vw + .5rem, 2.7rem);
+    line-height: 1.02;
+    margin-bottom: 18px;
+  }
+  .hero__sub {
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  .hero__cta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .hero__cta-row .btn { width: 100%; justify-content: center; }
+  .hero__price-block { width: 100%; }
+  .hero__ticker {
+    position: relative;
+    background: #06101F;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .hero__ticker-inner { grid-template-columns: 1fr 1fr; padding-inline: var(--container-px); }
+  .hero__ticker-cell { padding: 14px 12px; }
   .hero__ticker-cell:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.1); }
   .hero__ticker-cell:nth-child(even) { border-right: 0; }
   .hero__ticker-cell:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.1); }
-  .hero__cta-row { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .hero__ticker-value { font-size: 15px; line-height: 1.25; }
+
+  /* el header sigue absolute sobre la foto (parte superior del stack) */
 }
 
 /* ============================================================
