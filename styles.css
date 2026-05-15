@@ -1938,6 +1938,98 @@ main > section { padding-block: clamp(var(--s-8), 6vw, var(--s-10)); }
   .gallery__slide { width: 78vw; }
 }
 
+/* Galería: hover sugerente para indicar que se puede ampliar */
+.gallery__slide img { cursor: zoom-in; }
+
+/* ============================================================
+                      LIGHTBOX (visor de fotos)
+   ============================================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(5,8,12,.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+}
+.lightbox[hidden] { display: none; }
+
+.lightbox__figure {
+  max-width: 92vw;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+}
+.lightbox__img {
+  max-width: 92vw;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  background: #111;
+}
+.lightbox__caption {
+  color: rgba(255,255,255,.7);
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 720px;
+  text-align: center;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  border: 0;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s, transform .15s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.lightbox__close:hover,
+.lightbox__nav:hover { background: rgba(255,255,255,.24); transform: scale(1.04); }
+.lightbox__close:focus-visible,
+.lightbox__nav:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.lightbox__close { top: clamp(14px, 2.4vw, 24px); right: clamp(14px, 2.4vw, 24px); }
+.lightbox__nav--prev { left: clamp(14px, 2.4vw, 24px); top: 50%; transform: translateY(-50%); }
+.lightbox__nav--next { right: clamp(14px, 2.4vw, 24px); top: 50%; transform: translateY(-50%); }
+.lightbox__nav--prev:hover { transform: translateY(-50%) scale(1.04); }
+.lightbox__nav--next:hover { transform: translateY(-50%) scale(1.04); }
+
+.lightbox__counter {
+  position: absolute;
+  bottom: clamp(16px, 3vw, 28px);
+  color: rgba(255,255,255,.65);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .lightbox__nav { width: 40px; height: 40px; }
+  .lightbox__nav--prev { left: 10px; }
+  .lightbox__nav--next { right: 10px; }
+  .lightbox__close { top: 14px; right: 14px; width: 40px; height: 40px; }
+  .lightbox__caption { font-size: 12px; padding: 0 12px; }
+}
+
 /* ============================================================
                       COVERAGE PIN INTERACTIVE
    ============================================================ */

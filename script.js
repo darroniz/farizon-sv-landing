@@ -250,7 +250,7 @@
     });
   });
 
-  /* ----------  GALLERY (carrusel scroll-snap)  ---------- */
+  /* ----------  GALLERY (carrusel scroll-snap + lightbox)  ---------- */
   const galleryTrack = $('.gallery__track');
   if (galleryTrack) {
     function slideStep() {
@@ -270,6 +270,52 @@
       if (e.key === 'ArrowRight') { e.preventDefault(); galleryTrack.scrollBy({ left:  slideStep(), behavior: 'smooth' }); }
       if (e.key === 'ArrowLeft')  { e.preventDefault(); galleryTrack.scrollBy({ left: -slideStep(), behavior: 'smooth' }); }
     });
+
+    /* ----- Lightbox ----- */
+    const lightbox = $('#lightbox');
+    if (lightbox) {
+      const lbImg = $('.lightbox__img', lightbox);
+      const lbCap = $('.lightbox__caption', lightbox);
+      const lbCounter = $('.lightbox__counter', lightbox);
+      const slideImgs = $$('.gallery__slide img', galleryTrack);
+      let lbIdx = 0;
+      let lbLastFocused = null;
+
+      function lbShow(i) {
+        lbIdx = (i + slideImgs.length) % slideImgs.length;
+        const src = slideImgs[lbIdx];
+        lbImg.src = src.currentSrc || src.src;
+        lbImg.alt = src.alt || '';
+        lbCap.textContent = src.alt || '';
+        lbCounter.textContent = (lbIdx + 1) + ' / ' + slideImgs.length;
+      }
+      function lbOpen(i) {
+        lbLastFocused = document.activeElement;
+        lbShow(i);
+        lightbox.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(() => $('.lightbox__close', lightbox)?.focus());
+      }
+      function lbClose() {
+        lightbox.hidden = true;
+        document.documentElement.style.overflow = '';
+        if (lbLastFocused?.focus) lbLastFocused.focus();
+      }
+
+      slideImgs.forEach((img, i) => {
+        img.parentElement.addEventListener('click', (e) => { e.preventDefault(); lbOpen(i); });
+      });
+      $('[data-lightbox-close]', lightbox)?.addEventListener('click', lbClose);
+      $('[data-lightbox-prev]',  lightbox)?.addEventListener('click', () => lbShow(lbIdx - 1));
+      $('[data-lightbox-next]',  lightbox)?.addEventListener('click', () => lbShow(lbIdx + 1));
+      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lbClose(); });
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.hidden) return;
+        if (e.key === 'Escape') lbClose();
+        else if (e.key === 'ArrowLeft')  lbShow(lbIdx - 1);
+        else if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
+      });
+    }
   }
 
   /* ----------  REVEAL ON SCROLL  ---------- */
