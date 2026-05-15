@@ -457,58 +457,61 @@
 
         <div class="coverage__layout">
           <div class="coverage__map">
+           <div class="coverage__map-canvas">
             <img src="assets/spain.svg" alt="Mapa de España con la red de concesionarios Farizon" class="coverage__map-img">
-            <!-- Pins: posicionados en % sobre el SVG (1024×1024 viewBox).
+            <!-- Pins: posicionados en % del canvas interno (mismas dimensiones que el SVG).
+                 Coordenadas calculadas por proyección lon/lat → bbox del path SVG.
                  Clic abre Google Maps con la dirección del concesionario. -->
-            <button class="coverage__pin" type="button" style="left: 46.5%; top: 49%" data-pos="right"
+            <button class="coverage__pin" type="button" style="left: 39.3%; top: 44.1%" data-pos="right"
                     data-city="Madrid" data-name="Concesionario oficial Farizon Madrid"
                     data-addr="C/ Barco 9, 28220 Majadahonda"
                     data-gmaps="https://www.google.com/maps/dir/?api=1&destination=C%2F+Barco+9%2C+28220+Majadahonda%2C+Madrid"
                     aria-label="Madrid · Concesionario oficial Farizon · Cómo llegar">
               <span class="coverage__pin-dot"></span><span class="coverage__pin-label">Madrid</span>
             </button>
-            <button class="coverage__pin" type="button" style="left: 31.5%; top: 67%" data-pos="left"
+            <button class="coverage__pin" type="button" style="left: 24%; top: 73.1%" data-pos="left"
                     data-city="Sevilla" data-name="Concesionario oficial Farizon Sevilla"
                     data-addr="Av. Montes Sierra 22, 41007 Sevilla"
                     data-gmaps="https://www.google.com/maps/dir/?api=1&destination=Av.+Montes+Sierra+22%2C+41007+Sevilla"
                     aria-label="Sevilla · Concesionario oficial Farizon · Cómo llegar">
               <span class="coverage__pin-dot"></span><span class="coverage__pin-label">Sevilla</span>
             </button>
-            <button class="coverage__pin" type="button" style="left: 42%; top: 76%" data-pos="right"
+            <button class="coverage__pin" type="button" style="left: 35.3%; top: 79.4%" data-pos="right"
                     data-city="Málaga" data-name="Concesionario oficial Farizon Málaga"
                     data-addr="C/ La Tierra 4, 29004 Málaga"
                     data-gmaps="https://www.google.com/maps/dir/?api=1&destination=C%2F+La+Tierra+4%2C+29004+M%C3%A1laga"
                     aria-label="Málaga · Concesionario oficial Farizon · Cómo llegar">
               <span class="coverage__pin-dot"></span><span class="coverage__pin-label">Málaga</span>
             </button>
-            <button class="coverage__pin" type="button" style="left: 60%; top: 39%" data-pos="right"
+            <button class="coverage__pin" type="button" style="left: 59.9%; top: 32.9%" data-pos="right"
                     data-city="Zaragoza" data-name="Concesionario oficial Farizon Zaragoza"
                     data-addr="Ctra. del Aeropuerto km 4, 50011 Zaragoza"
                     data-gmaps="https://www.google.com/maps/dir/?api=1&destination=Ctra.+del+Aeropuerto+km+4%2C+50011+Zaragoza"
                     aria-label="Zaragoza · Concesionario oficial Farizon · Cómo llegar">
               <span class="coverage__pin-dot"></span><span class="coverage__pin-label">Zaragoza</span>
             </button>
-            <button class="coverage__pin" type="button" style="left: 60%; top: 25%" data-pos="left"
+            <button class="coverage__pin" type="button" style="left: 55.4%; top: 22.5%" data-pos="left"
                     data-city="Navarra" data-name="Concesionario oficial Farizon Navarra"
                     data-addr="Polígono Talluntxe II, 31110 Noáin"
                     data-gmaps="https://www.google.com/maps/dir/?api=1&destination=Pol%C3%ADgono+Talluntxe+II%2C+31110+No%C3%A1in"
                     aria-label="Navarra · Concesionario oficial Farizon · Cómo llegar">
               <span class="coverage__pin-dot"></span><span class="coverage__pin-label">Navarra</span>
             </button>
-            <button class="coverage__pin" type="button" style="left: 75%; top: 43%" data-pos="right"
+            <button class="coverage__pin" type="button" style="left: 75.2%; top: 37.7%" data-pos="right"
                     data-city="Tarragona" data-name="Concesionario oficial Farizon Tarragona"
                     data-addr="C/ Cambrils s/n, 43204 Reus"
                     data-gmaps="https://www.google.com/maps/dir/?api=1&destination=C%2F+Cambrils+s%2Fn%2C+43204+Reus"
                     aria-label="Tarragona · Concesionario oficial Farizon · Cómo llegar">
               <span class="coverage__pin-dot"></span><span class="coverage__pin-label">Tarragona</span>
             </button>
-            <button class="coverage__pin" type="button" style="left: 67%; top: 58%" data-pos="right"
+            <button class="coverage__pin" type="button" style="left: 65.9%; top: 58.2%" data-pos="right"
                     data-city="Comunidad Valenciana" data-name="Concesionario oficial Farizon Comunidad Valenciana"
                     data-addr="Av. Villalonga 9, 46702 Gandía"
                     data-gmaps="https://www.google.com/maps/dir/?api=1&destination=Av.+Villalonga+9%2C+46702+Gand%C3%ADa"
                     aria-label="Comunidad Valenciana · Concesionario oficial Farizon · Cómo llegar">
               <span class="coverage__pin-dot"></span><span class="coverage__pin-label">C. Valenciana</span>
             </button>
+           </div>
           </div>
 
           <ol class="coverage__list">
