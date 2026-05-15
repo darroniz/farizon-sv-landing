@@ -1950,6 +1950,55 @@ main > section { padding-block: clamp(var(--s-8), 6vw, var(--s-10)); }
 .gallery__slide img { cursor: zoom-in; }
 
 /* ============================================================
+                      MAP EDIT MODE (solo ?edit=1)
+   ============================================================ */
+.edit-panel {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+  background: #0E1A2B;
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  width: 340px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.edit-panel h4 { font-family: var(--font-display); font-size: 14px; margin-bottom: 4px; letter-spacing: -.01em; }
+.edit-panel p { font-size: 11px; color: rgba(255,255,255,.55); margin-bottom: 10px; line-height: 1.4; }
+.edit-coords {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.55;
+  background: rgba(0,0,0,.4);
+  padding: 10px 12px;
+  border-radius: 6px;
+  max-height: 220px;
+  overflow: auto;
+  color: #7EE5A0;
+  white-space: pre;
+  margin: 0;
+}
+.edit-copy {
+  margin-top: 10px;
+  background: var(--color-cta);
+  color: #fff;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: -.005em;
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  transition: background .15s;
+}
+.edit-copy:hover { background: var(--color-cta-hover, #14883E); }
+
+/* ============================================================
                       LIGHTBOX (visor de fotos)
    ============================================================ */
 .lightbox {

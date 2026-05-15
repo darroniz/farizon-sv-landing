@@ -237,8 +237,11 @@
   }
 
   /* ----------  COVERAGE MAP: clic en pin → Google Maps  ---------- */
+  const EDIT_MAP = new URLSearchParams(location.search).get('edit') === '1';
+
   $$('.coverage__pin').forEach(pin => {
-    pin.addEventListener('click', () => {
+    pin.addEventListener('click', (e) => {
+      if (EDIT_MAP) return;          // en modo editor el clic no navega
       const url = pin.dataset.gmaps;
       if (!url) return;
       window.open(url, '_blank', 'noopener');
@@ -249,6 +252,71 @@
       });
     });
   });
+
+  /* ----------  COVERAGE MAP: modo editor (?edit=1)  ---------- */
+  if (EDIT_MAP) {
+    const canvas = $('.coverage__map-canvas');
+    if (canvas) {
+      const pins = $$('.coverage__pin', canvas);
+
+      const panel = document.createElement('div');
+      panel.className = 'edit-panel';
+      panel.innerHTML = `
+        <h4>Mapa: modo editor</h4>
+        <p>Arrastra los pins. Al soltar, las coords se actualizan abajo.</p>
+        <pre class="edit-coords"></pre>
+        <button type="button" class="edit-copy">Copiar coordenadas</button>
+      `;
+      document.body.appendChild(panel);
+      const coordsEl = $('.edit-coords', panel);
+
+      function updateCoordsPanel() {
+        coordsEl.textContent = pins
+          .map(p => `${p.dataset.city.padEnd(22)} left: ${p.style.left.padEnd(6)}  top: ${p.style.top}`)
+          .join('\n');
+      }
+      updateCoordsPanel();
+
+      pins.forEach(pin => {
+        pin.style.cursor = 'grab';
+        let dragging = false, sx, sy, sLeft, sTop;
+
+        function startDrag(clientX, clientY) {
+          dragging = true;
+          sx = clientX; sy = clientY;
+          sLeft = parseFloat(pin.style.left);
+          sTop  = parseFloat(pin.style.top);
+          pin.style.cursor = 'grabbing';
+        }
+        function moveDrag(clientX, clientY) {
+          if (!dragging) return;
+          const r = canvas.getBoundingClientRect();
+          const nl = Math.max(0, Math.min(100, sLeft + (clientX - sx) / r.width  * 100));
+          const nt = Math.max(0, Math.min(100, sTop  + (clientY - sy) / r.height * 100));
+          pin.style.left = nl.toFixed(1) + '%';
+          pin.style.top  = nt.toFixed(1) + '%';
+          updateCoordsPanel();
+        }
+        function endDrag() {
+          if (dragging) { dragging = false; pin.style.cursor = 'grab'; }
+        }
+
+        pin.addEventListener('mousedown', (e) => { e.preventDefault(); startDrag(e.clientX, e.clientY); });
+        document.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
+        document.addEventListener('mouseup', endDrag);
+
+        pin.addEventListener('touchstart', (e) => { const t = e.touches[0]; startDrag(t.clientX, t.clientY); }, { passive: true });
+        document.addEventListener('touchmove', (e) => { const t = e.touches[0]; if (t) moveDrag(t.clientX, t.clientY); }, { passive: true });
+        document.addEventListener('touchend', endDrag);
+      });
+
+      $('.edit-copy', panel).addEventListener('click', () => {
+        navigator.clipboard.writeText(coordsEl.textContent)
+          .then(() => { const b = $('.edit-copy', panel); const old = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = old, 1400); })
+          .catch(() => alert(coordsEl.textContent));
+      });
+    }
+  }
 
   /* ----------  GALLERY (carrusel scroll-snap + lightbox)  ---------- */
   const galleryTrack = $('.gallery__track');
