@@ -1,5 +1,5 @@
 /* ============================================================
-   Farizon SuperVan — Landing test-drive (B2B furgonetero)
+   Farizon SV — Landing test-drive (B2B furgonetero / pyme)
    Dirección: profesional, técnico, sobrio
    Tipografía: Manrope (display) + Inter (body)
    Paleta: navy oscuro + verde lima (CTA "eléctrico")
@@ -1851,6 +1851,203 @@ main > section { padding-block: clamp(var(--s-8), 6vw, var(--s-10)); }
   color: var(--color-ink-muted);
   margin-bottom: var(--s-5);
   line-height: 1.5;
+}
+
+/* ============================================================
+                      GALLERY (carrusel horizontal)
+   ============================================================ */
+.gallery { padding-block: var(--s-7) var(--s-6); background: var(--color-bg); }
+.gallery .section-head { margin-bottom: var(--s-6); }
+
+.gallery__viewport {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--s-2);
+}
+.gallery__track {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-inline: clamp(20px, 4vw, 56px);
+  padding-inline: clamp(20px, 4vw, 56px);
+  padding-block: 4px;
+  margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,.18) transparent;
+}
+.gallery__track::-webkit-scrollbar { height: 8px; }
+.gallery__track::-webkit-scrollbar-track { background: transparent; }
+.gallery__track::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); border-radius: 8px; }
+
+.gallery__slide {
+  flex: 0 0 auto;
+  width: clamp(260px, 28vw, 420px);
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--color-bg-soft);
+  box-shadow: 0 4px 18px rgba(14,26,43,.08);
+  transition: transform .25s ease;
+}
+.gallery__slide:hover { transform: translateY(-2px); }
+.gallery__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery__edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  pointer-events: none;
+  z-index: 2;
+}
+.gallery__edge--left  { left: 0;  background: linear-gradient(to right, var(--color-bg), transparent); }
+.gallery__edge--right { right: 0; background: linear-gradient(to left,  var(--color-bg), transparent); }
+
+.gallery__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  box-shadow: 0 2px 10px rgba(14,26,43,.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s, transform .15s, box-shadow .15s;
+}
+.gallery__nav:hover { background: var(--color-brand-navy); color: #fff; transform: translateY(-50%) scale(1.04); }
+.gallery__nav--prev { left: clamp(8px, 1.5vw, 18px); }
+.gallery__nav--next { right: clamp(8px, 1.5vw, 18px); }
+@media (max-width: 640px) {
+  .gallery__nav { display: none; }
+  .gallery__slide { width: 78vw; }
+}
+
+/* ============================================================
+                      COVERAGE PIN INTERACTIVE
+   ============================================================ */
+button.coverage__pin {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  pointer-events: auto;
+  transition: transform .18s ease;
+}
+button.coverage__pin:hover,
+button.coverage__pin:focus-visible {
+  transform: translate(-50%, -50%) scale(1.06);
+  z-index: 5;
+}
+button.coverage__pin:focus-visible { outline: none; }
+button.coverage__pin:focus-visible .coverage__pin-dot {
+  box-shadow: 0 1px 4px rgba(0,0,0,.25), 0 0 0 4px rgba(22,163,74,.35);
+}
+button.coverage__pin:hover .coverage__pin-label,
+button.coverage__pin:focus-visible .coverage__pin-label {
+  background: var(--color-cta);
+  color: #fff;
+  border-color: var(--color-cta);
+}
+
+/* Lista de concesionarios: link a GMaps */
+.coverage-dealer__addr {
+  text-decoration: none;
+  color: var(--color-ink-muted);
+  transition: color .15s;
+}
+a.coverage-dealer__addr:hover { color: var(--color-ink); }
+.coverage-dealer__gmaps {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-cta);
+  letter-spacing: -.005em;
+}
+a.coverage-dealer__addr:hover .coverage-dealer__gmaps { text-decoration: underline; }
+
+/* ============================================================
+                      FOOTER: redes + email
+   ============================================================ */
+.site-footer__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  margin-bottom: var(--s-4);
+}
+.site-footer__logo img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+.site-footer__contact {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+.site-footer__email {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,.88);
+  text-decoration: none;
+  transition: color .15s;
+}
+.site-footer__email:hover { color: #fff; }
+.site-footer__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.site-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  transition: background .15s, transform .15s;
+}
+.site-footer__social a:hover { background: var(--color-cta); transform: translateY(-1px); }
+
+/* Hero precio: subunidad pequeñita */
+.hero__price-unit {
+  font-size: 0.55em;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin-left: 4px;
+  color: rgba(255,255,255,.85);
 }
 
 /* ============================================================

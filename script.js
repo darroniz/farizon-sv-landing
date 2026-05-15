@@ -1,5 +1,5 @@
 /* ============================================================
-   Farizon SuperVan landing — interactions
+   Farizon SV landing — interactions
    - Modal open/close (click, backdrop, Escape, focus trap)
    - Form submit: POST a Zapier + Apps Script (Sheet backup) + dataLayer
    - Success view tras enviar el formulario
@@ -10,7 +10,7 @@
    TODO antes de publicar:
    - Sustituir ZAPIER_WEBHOOK por el endpoint propio de Farizon (no reutilizar el de Dongfeng).
    - Sustituir SHEET_WEBHOOK por la Apps Script de la hoja "Leads landing Farizon SV".
-   - Confirmar con Salvador Caetano los códigos de concesionario Farizon (Dealership_Code)
+   - Confirmar con Farizon Auto España los códigos de concesionario (Dealership_Code)
      y los códigos de campaña/marca/modelo a enviar al CRM.
    ============================================================ */
 
@@ -86,31 +86,29 @@
     return p;
   }
 
-  // CP español → identificador interno del concesionario Farizon (Salvador Caetano).
+  // CP español → identificador interno del concesionario oficial Farizon.
   // Solo hay 7 puntos de venta oficiales: Madrid (Majadahonda), Málaga, Sevilla,
-  // Zaragoza, Navarra (Noáin), Tarragona (Reus) y Valencia (Gandía).
+  // Zaragoza, Navarra (Noáin), Tarragona (Reus) y Comunidad Valenciana (Gandía).
   // TODO: sustituir los identificadores genéricos por los códigos CRM reales que
-  //       use Salvador Caetano para Farizon.
+  //       use Farizon Auto España.
   function dealerCodeFromCP(cp) {
     const digits = (cp || '').replace(/\D/g, '');
     if (digits.length < 2) return '';
-    const n = parseInt(digits, 10);
-    // Rango específico para Gandía (dentro de 46xxx)
-    if (n >= 46700 && n <= 46729) return 'FARIZON_GANDIA';
     const province = digits.slice(0, 2);
     const provinceToDealer = {
-      '28': 'FARIZON_MADRID',     // Caetano F Madrid (Majadahonda)
-      '29': 'FARIZON_MALAGA',     // Caetano F Málaga
-      '41': 'FARIZON_SEVILLA',    // Caetano F Sevilla
-      '50': 'FARIZON_ZARAGOZA',   // Ágreda Global Cars
-      '31': 'FARIZON_NAVARRA',    // Navarra Motor (Noáin)
-      '43': 'FARIZON_TARRAGONA'   // Nima Volt (Reus)
+      '28': 'FARIZON_MADRID',     // Madrid (Majadahonda)
+      '29': 'FARIZON_MALAGA',     // Málaga
+      '41': 'FARIZON_SEVILLA',    // Sevilla
+      '50': 'FARIZON_ZARAGOZA',   // Zaragoza
+      '31': 'FARIZON_NAVARRA',    // Navarra (Noáin)
+      '43': 'FARIZON_TARRAGONA',  // Tarragona (Reus)
+      '46': 'FARIZON_VALENCIA'    // Comunidad Valenciana (Gandía)
     };
     return provinceToDealer[province] || ''; // resto de CP: fallback central
   }
 
   function buildPayload({ name, last_name, phone, cp, email, dealer }) {
-    // TODO Farizon: pedir a Salvador Caetano los códigos reales de
+    // TODO Farizon: pedir a Farizon Auto España los códigos reales de
     // Model_Code, Brand_Code, Campaign_Code, Form_Type, Lead_Source, etc.
     // específicos para Farizon SV (los actuales son placeholders).
     return {
@@ -236,6 +234,42 @@
       const show = !heroVisible && !ctaFinalVisible;
       stickyCta.classList.toggle('is-visible', show);
     }
+  }
+
+  /* ----------  COVERAGE MAP: clic en pin → Google Maps  ---------- */
+  $$('.coverage__pin').forEach(pin => {
+    pin.addEventListener('click', () => {
+      const url = pin.dataset.gmaps;
+      if (!url) return;
+      window.open(url, '_blank', 'noopener');
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'coverage_pin_click',
+        dealer_city: pin.dataset.city || ''
+      });
+    });
+  });
+
+  /* ----------  GALLERY (carrusel scroll-snap)  ---------- */
+  const galleryTrack = $('.gallery__track');
+  if (galleryTrack) {
+    function slideStep() {
+      const slide = $('.gallery__slide', galleryTrack);
+      if (!slide) return 320;
+      const styles = getComputedStyle(galleryTrack);
+      const gap = parseFloat(styles.gap || '18') || 18;
+      return slide.getBoundingClientRect().width + gap;
+    }
+    $('[data-gallery-prev]')?.addEventListener('click', () => {
+      galleryTrack.scrollBy({ left: -slideStep(), behavior: 'smooth' });
+    });
+    $('[data-gallery-next]')?.addEventListener('click', () => {
+      galleryTrack.scrollBy({ left:  slideStep(), behavior: 'smooth' });
+    });
+    galleryTrack.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); galleryTrack.scrollBy({ left:  slideStep(), behavior: 'smooth' }); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); galleryTrack.scrollBy({ left: -slideStep(), behavior: 'smooth' }); }
+    });
   }
 
   /* ----------  REVEAL ON SCROLL  ---------- */
