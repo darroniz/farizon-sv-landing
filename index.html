@@ -736,18 +736,18 @@
         <h3 id="modal-title" class="modal__title">Reserva tu prueba <em>gratuita</em></h3>
         <p class="modal__sub">Te llamamos en menos de 24&nbsp;h para coordinar día y hora.</p>
 
-        <form class="form" id="leadForm" novalidate>
+        <form class="form" id="leadForm">
           <div class="field">
             <label for="f-name">Tu nombre</label>
-            <input type="text" id="f-name" name="name" placeholder="Ej: Carlos" required autocomplete="given-name">
+            <input type="text" id="f-name" name="name" placeholder="Ej: Carlos" required minlength="2" autocomplete="given-name">
           </div>
           <div class="field">
             <label for="f-phone">Teléfono</label>
-            <input type="tel" id="f-phone" name="phone" placeholder="Ej: 612 345 678" required autocomplete="tel" inputmode="tel">
+            <input type="tel" id="f-phone" name="phone" placeholder="Ej: 612 345 678" required autocomplete="tel" inputmode="tel" pattern="(\+?34[\s.-]?)?[6789]\d{2}[\s.-]?\d{3}[\s.-]?\d{3}" title="Introduce un número español de 9 dígitos (ej: 612 345 678)">
           </div>
           <div class="field field--cp">
             <label for="f-cp">Código postal</label>
-            <input type="text" id="f-cp" name="cp" placeholder="Ej: 28220" pattern="[0-9]{5}" inputmode="numeric" autocomplete="postal-code">
+            <input type="text" id="f-cp" name="cp" placeholder="Ej: 28220" required pattern="[0-9]{5}" maxlength="5" inputmode="numeric" autocomplete="postal-code" title="Introduce un código postal español de 5 dígitos">
           </div>
           <div class="field">
             <label for="f-email">Email <span class="field__optional">(opcional, te enviamos tu oferta)</span></label>
