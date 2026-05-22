@@ -71,9 +71,15 @@
   const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/3397010/2nzkijc/';
   const SHEET_WEBHOOK  = '';  // Apps Script de la hoja "Leads landing Farizon SV" — pendiente
 
+  // HubSpot rechaza contactos sin last_name. Si el usuario solo escribe
+  // un nombre, duplicamos el nombre completo en first y last (mismo patrón
+  // que el flujo n8n de leads de TikTok de Dongfeng).
   function splitName(fullName) {
-    const parts = (fullName || '').trim().split(/\s+/);
-    return { first: parts.shift() || '', last: parts.join(' ') };
+    const raw = (fullName || '').trim().replace(/\s+/g, ' ');
+    const parts = raw ? raw.split(' ') : [];
+    const first = parts.shift() || '';
+    const rest = parts.join(' ');
+    return { first, last: rest || raw };
   }
 
   // E.164 español. Enhanced Conversions exige prefijo internacional para hacer match.
