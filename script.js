@@ -221,11 +221,14 @@
         fbq('track', 'Lead');
       }
 
-      // Google Ads: conversión. Falta conversion label de Ads para hacer match.
-      // Cuando llegue, descomentar y rellenar send_to: 'AW-18179226818/<CONVERSION_LABEL>'.
-      // if (typeof gtag === 'function') {
-      //   gtag('event', 'conversion', { send_to: 'AW-18179226818/XXXXXXXX' });
-      // }
+      // Google Ads: conversión "Envío de formulario para clientes potenciales".
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          send_to: 'AW-18179226818/_FrcCOOI7LAcEML5w9xD',
+          value: 1.0,
+          currency: 'EUR'
+        });
+      }
 
       $$('.modal__body', modal).forEach(v => v.hidden = v.dataset.view !== 'success');
     });
