@@ -67,9 +67,9 @@
   });
 
   /* ----------  FORM SUBMIT  ---------- */
-  // TODO Farizon: estos endpoints son los del flujo Dongfeng — sustituir antes de publicar.
-  const ZAPIER_WEBHOOK = '';  // p.ej. 'https://hooks.zapier.com/hooks/catch/3397010/XXXXX/'
-  const SHEET_WEBHOOK  = '';  // Apps Script de la hoja "Leads landing Farizon SV"
+  // Mismo webhook que Dongfeng: el Zap detrás enruta a HubSpot por Brand_Code/Model_Code.
+  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/3397010/2nzkijc/';
+  const SHEET_WEBHOOK  = '';  // Apps Script de la hoja "Leads landing Farizon SV" — pendiente
 
   function splitName(fullName) {
     const parts = (fullName || '').trim().split(/\s+/);
@@ -82,41 +82,55 @@
     if (!p) return '';
     if (p.startsWith('00')) p = '+' + p.slice(2);
     if (p.startsWith('+')) return p;
+    // Autofill suele dejar "34XXXXXXXXX" sin el "+": le anteponemos el "+".
+    if (/^34[6789]\d{8}$/.test(p)) return '+' + p;
     if (/^[6789]\d{8}$/.test(p)) return '+34' + p;
     return p;
   }
 
-  // CP español → identificador interno del concesionario oficial Farizon.
-  // Solo hay 7 puntos de venta oficiales: Madrid (Majadahonda), Málaga, Sevilla,
-  // Zaragoza, Navarra (Noáin), Tarragona (Reus) y Comunidad Valenciana (Gandía).
-  // TODO: sustituir los identificadores genéricos por los códigos CRM reales que
-  //       use Farizon Auto España.
+  // CP español → código de concesionario Salvador Caetano (mismos códigos CRM que Dongfeng).
+  // Rangos específicos sobrescriben el default provincial (Sabadell dentro de 08,
+  // Majadahonda dentro de 28, Gandía dentro de 46).
   function dealerCodeFromCP(cp) {
     const digits = (cp || '').replace(/\D/g, '');
     if (digits.length < 2) return '';
+    const n = parseInt(digits, 10);
+    if (n >= 8200 && n <= 8208) return 'DE00060002';   // Sabadell
+    if (n >= 28220 && n <= 28229) return 'DE05710004'; // Majadahonda
+    if (n >= 46700 && n <= 46729) return 'DE06350009'; // Gandía
     const province = digits.slice(0, 2);
     const provinceToDealer = {
-      '28': 'FARIZON_MADRID',     // Madrid (Majadahonda)
-      '29': 'FARIZON_MALAGA',     // Málaga
-      '41': 'FARIZON_SEVILLA',    // Sevilla
-      '50': 'FARIZON_ZARAGOZA',   // Zaragoza
-      '31': 'FARIZON_NAVARRA',    // Navarra (Noáin)
-      '43': 'FARIZON_TARRAGONA',  // Tarragona (Reus)
-      '46': 'FARIZON_VALENCIA'    // Comunidad Valenciana (Gandía)
+      '03': 'DE00110011', // Alicante
+      '07': 'DE00080001', // Palma de Mallorca
+      '08': 'DE05840006', // Barcelona
+      '15': 'DE00110012', // A Coruña
+      '17': 'DE00180001', // Girona
+      '19': 'DE00160001', // Guadalajara
+      '28': 'DE00050002', // Madrid
+      '29': 'DE01050013', // Málaga
+      '30': 'DE00070002', // Murcia
+      '31': 'DE00150001', // Navarra
+      '33': 'DE00110005', // Oviedo (Asturias)
+      '39': 'DE00070001', // Santander
+      '41': 'DE00110001', // Sevilla
+      '43': 'DE00140001', // Tarragona
+      '47': 'DE00090001', // Valladolid
+      '48': 'DE01100014', // Bilbao
+      '50': 'DE00100004', // Zaragoza
+      '35': 'DE00780003', // Las Palmas (Canarias)
+      '38': 'DE00090002'  // Santa Cruz de Tenerife (Canarias)
     };
-    return provinceToDealer[province] || ''; // resto de CP: fallback central
+    return provinceToDealer[province] || '';
   }
 
   function buildPayload({ name, last_name, phone, cp, email, dealer }) {
-    // TODO Farizon: pedir a Farizon Auto España los códigos reales de
-    // Model_Code, Brand_Code, Campaign_Code, Form_Type, Lead_Source, etc.
-    // específicos para Farizon SV (los actuales son placeholders).
     return {
       Name: name,
       Last_Name: last_name,
       Email: email || '',
       Phone: phone,
-      Model_Code: 'FARIZON_SV',           // placeholder
+      Model_Code: '1119',
+      Model_Name: 'SuperVAN l1h1',
       Dealership_Code: dealer || '',
       Postal_Code: cp || '',
       Privacy_Policy: 'Y',
@@ -125,9 +139,11 @@
       Request_Type: 'TPD10',
       Lead_Source: 'OL24',
       Form_Type: 'F12',
-      Campaign_Code: 'FARIZON_SV_LANDING', // placeholder
-      Brand_Code: 'FAR',                   // placeholder
-      Country_Code: 'ES'
+      Campaign_Code: 'CPH020',
+      Brand_Code: 'FAR',
+      Brand_Name: 'FARIZON',
+      Country_Code: 'ES',
+      Region: 'PEN'
     };
   }
 
@@ -165,13 +181,15 @@
       e.preventDefault();
       const data = Object.fromEntries(new FormData(leadForm).entries());
       const { first, last } = splitName(data.name);
-      const dealer = dealerCodeFromCP(data.cp);
+      const phone = normalizePhoneES(data.phone);
+      const cp = (data.cp || '').replace(/\D/g, '');
+      const dealer = dealerCodeFromCP(cp);
 
       const payload = buildPayload({
         name: first,
         last_name: last,
-        phone: data.phone || '',
-        cp: data.cp || '',
+        phone,
+        cp,
         email: data.email || '',
         dealer
       });
@@ -188,11 +206,11 @@
         dealer,
         enhanced_conversion_data: {
           email: data.email || '',
-          phone_number: normalizePhoneES(data.phone),
+          phone_number: phone,
           address: {
             first_name: first,
             last_name: last,
-            postal_code: data.cp || '',
+            postal_code: cp,
             country: 'ES'
           }
         }
