@@ -216,6 +216,17 @@
         }
       });
 
+      // Meta Pixel: evento estándar de lead.
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead');
+      }
+
+      // Google Ads: conversión. Falta conversion label de Ads para hacer match.
+      // Cuando llegue, descomentar y rellenar send_to: 'AW-18179226818/<CONVERSION_LABEL>'.
+      // if (typeof gtag === 'function') {
+      //   gtag('event', 'conversion', { send_to: 'AW-18179226818/XXXXXXXX' });
+      // }
+
       $$('.modal__body', modal).forEach(v => v.hidden = v.dataset.view !== 'success');
     });
   }
