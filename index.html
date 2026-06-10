@@ -693,7 +693,7 @@
         </div>
       </div>
       <p class="site-footer__legal">
-        © 2026 Farizon Auto España · <a href="#">Política de privacidad</a> · <a href="#">Cookies</a> · <a href="#">Aviso legal</a>
+        © 2026 Farizon Auto España · <a href="https://www.farizon-auto.es/politica-de-privacidad">Política de privacidad</a> · <a href="https://www.farizon-auto.es/politica-de-cookies">Cookies</a>
       </p>
       <p class="site-footer__finance">*Cuota mensual desde 495,44&nbsp;€/mes + IVA del Plan Autoplus (60 meses · 10.000&nbsp;km/año, versión L1H1). Sujeto a aprobación de la entidad financiera. Consulta condiciones y disponibilidad en tu concesionario oficial Farizon.</p>
     </div>
@@ -753,8 +753,14 @@
             <label for="f-email">Email <span class="field__optional">(opcional, te enviamos tu oferta)</span></label>
             <input type="email" id="f-email" name="email" placeholder="tu@email.com" autocomplete="email" inputmode="email">
           </div>
+          <!-- Honeypot antibots: oculto a personas, los bots tienden a rellenarlo. Si llega con valor, el Apps Script descarta el lead. -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;" tabindex="-1">
+            <label>No rellenar
+              <input type="text" name="fax" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
           <button type="submit" class="btn btn--primary btn--lg btn--block">Reservar mi prueba gratuita</button>
-          <p class="form__legal">Al enviar, aceptas nuestra <a href="#">política de privacidad</a>. Te contactamos en menos de 24&nbsp;h. Sin compromiso.</p>
+          <p class="form__legal">Al enviar, aceptas nuestra <a href="https://www.farizon-auto.es/politica-de-privacidad">política de privacidad</a>. Te contactamos en menos de 24&nbsp;h. Sin compromiso.</p>
         </form>
       </div>
 

@@ -67,9 +67,13 @@
   });
 
   /* ----------  FORM SUBMIT  ---------- */
-  // Mismo webhook que Dongfeng: el Zap detrás enruta a HubSpot por Brand_Code/Model_Code.
-  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/3397010/2nzkijc/';
-  const SHEET_WEBHOOK  = '';  // Apps Script de la hoja "Leads landing Farizon SV" — pendiente
+  // Gateway Apps Script: loguea el lead en la hoja "Leads landing Farizon SV",
+  // filtra bots y reenvía a Zapier (el Zap enruta a HubSpot por Brand_Code/Model_Code).
+  // La URL de Zapier vive SOLO en el Apps Script, fuera de este código público.
+  const GATEWAY_WEBHOOK = 'https://script.google.com/macros/s/AKfycbx6ZSpiY9JJs4SBttnh5bSY8h-M1OIT5oakOl92E3caZHgZqDPZAq_VCw9-8cKr8DfE/exec';
+
+  // Token compartido con el Apps Script: sin él, el gateway descarta el envío.
+  const FORM_TOKEN = 'farsv-x9k4w72mq';
 
   // HubSpot rechaza contactos sin last_name. Si el usuario solo escribe
   // un nombre, duplicamos el nombre completo en first y last (mismo patrón
@@ -153,32 +157,18 @@
     };
   }
 
-  // text/plain (CORS-safe) evita el preflight que Zapier rechaza con application/json.
-  // Zapier interpreta el body como JSON igualmente.
-  function sendToZapier(payload) {
-    if (!ZAPIER_WEBHOOK) return Promise.resolve(null);
-    return fetch(ZAPIER_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    })
-      .then(r => r.json().catch(() => ({ status: r.ok ? 'success' : 'error' })))
-      .then(res => { console.info('[Farizon] zapier ok:', res); return res; })
-      .catch(err => { console.error('[Farizon] zapier error:', err); });
-  }
-
   // Apps Script web app: usa text/plain para evitar el preflight CORS, el body sigue siendo JSON.
-  function sendToSheet(payload) {
-    if (!SHEET_WEBHOOK) return Promise.resolve(null);
-    return fetch(SHEET_WEBHOOK, {
+  function sendToGateway(payload) {
+    if (!GATEWAY_WEBHOOK) return Promise.resolve(null);
+    return fetch(GATEWAY_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload),
       redirect: 'follow'
     })
       .then(r => r.text().then(t => { try { return JSON.parse(t); } catch { return { status: r.ok ? 'success' : 'error', raw: t }; } }))
-      .then(res => { console.info('[Farizon] sheet ok:', res); return res; })
-      .catch(err => { console.error('[Farizon] sheet error:', err); });
+      .then(res => { console.info('[Farizon] gateway ok:', res); return res; })
+      .catch(err => { console.error('[Farizon] gateway error:', err); });
   }
 
   const leadForm = $('#leadForm');
@@ -200,8 +190,11 @@
         dealer
       });
 
-      sendToZapier(payload);
-      sendToSheet(payload);
+      // Antibots: token compartido + honeypot. El Apps Script descarta lo que no cuadre.
+      payload._t = FORM_TOKEN;
+      payload._hp = data.fax || '';
+
+      sendToGateway(payload);
 
       // Enhanced Conversions: GTM hashea (SHA-256) los campos de enhanced_conversion_data
       // antes de mandarlos a Google Ads. No hashear aquí.
