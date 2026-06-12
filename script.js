@@ -99,13 +99,14 @@
   }
 
   // CP español → código de concesionario Salvador Caetano (mismos códigos CRM que Dongfeng).
-  // Rangos específicos sobrescriben el default provincial (Sabadell dentro de 08,
-  // Majadahonda dentro de 28, Gandía dentro de 46).
+  // Rangos específicos sobrescriben el default provincial (Sabadell y Manresa
+  // dentro de 08, Majadahonda dentro de 28, Gandía dentro de 46).
   function dealerCodeFromCP(cp) {
     const digits = (cp || '').replace(/\D/g, '');
     if (digits.length < 2) return '';
     const n = parseInt(digits, 10);
     if (n >= 8200 && n <= 8208) return 'DE00060002';   // Sabadell
+    if (n >= 8240 && n <= 8243) return 'FE00820006';   // Manresa (Full Traction)
     if (n >= 28220 && n <= 28229) return 'DE05710004'; // Majadahonda
     if (n >= 46700 && n <= 46729) return 'DE06350009'; // Gandía
     const province = digits.slice(0, 2);
