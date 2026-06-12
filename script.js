@@ -107,7 +107,7 @@
     if (digits.length < 2) return '';
     const n = parseInt(digits, 10);
     if (n >= 8200 && n <= 8208) return 'DE00060002';   // Sabadell
-    if (n >= 8240 && n <= 8243) return 'FE00820006';   // Manresa (Full Traction)
+    if (n >= 8240 && n <= 8243) return 'DE00820006';   // Manresa (Full Traction)
     if (n >= 28220 && n <= 28229) return 'DE05710004'; // Majadahonda
     const province = digits.slice(0, 2);
     const provinceToDealer = {
