@@ -156,7 +156,7 @@
             </div>
             <div class="timeline__card">
               <h3 class="timeline__title">Rellenas el formulario</h3>
-              <p class="timeline__text">Nombre, teléfono y código postal. 20&nbsp;segundos. Asignamos automáticamente tu concesionario más cercano.</p>
+              <p class="timeline__text">Nombre, teléfono y tu concesionario más cercano. 20&nbsp;segundos.</p>
             </div>
           </li>
           <li class="timeline__step">
@@ -745,9 +745,34 @@
             <label for="f-phone">Teléfono</label>
             <input type="tel" id="f-phone" name="phone" placeholder="Ej: 612 345 678" required autocomplete="tel" inputmode="tel" pattern="(\+?34[\s.\-]?)?[6789]\d{2}[\s.\-]?\d{3}[\s.\-]?\d{3}" title="Introduce un número español de 9 dígitos (ej: 612 345 678)">
           </div>
-          <div class="field field--cp">
-            <label for="f-cp">Código postal</label>
-            <input type="text" id="f-cp" name="cp" placeholder="Ej: 28220" required pattern="[0-9]{5}" maxlength="5" inputmode="numeric" autocomplete="postal-code" title="Introduce un código postal español de 5 dígitos">
+          <div class="field field--dealer">
+            <label for="f-dealer">Concesionario más cercano</label>
+            <select id="f-dealer" name="dealer" required>
+              <option value="" disabled selected>Elige tu concesionario</option>
+              <option value="DE00110012">A Coruña</option>
+              <option value="DE00110011">Alicante</option>
+              <option value="DE05840006">Barcelona</option>
+              <option value="DE01100014">Bilbao</option>
+              <option value="DE06350009">Gandía (Valencia)</option>
+              <option value="DE00180001">Girona</option>
+              <option value="DE00160001">Guadalajara</option>
+              <option value="DE00780003">Las Palmas</option>
+              <option value="DE00050002">Madrid</option>
+              <option value="DE05710004">Majadahonda (Madrid)</option>
+              <option value="DE01050013">Málaga</option>
+              <option value="DE00820006">Manresa</option>
+              <option value="DE00070002">Murcia</option>
+              <option value="DE00150001">Navarra (Noáin)</option>
+              <option value="DE00110005">Oviedo</option>
+              <option value="DE00080001">Palma de Mallorca</option>
+              <option value="DE00060002">Sabadell</option>
+              <option value="DE00090002">Santa Cruz de Tenerife</option>
+              <option value="DE00070001">Santander</option>
+              <option value="DE00110001">Sevilla</option>
+              <option value="DE00140001">Tarragona (Reus)</option>
+              <option value="DE00090001">Valladolid</option>
+              <option value="DE00100004">Zaragoza</option>
+            </select>
           </div>
           <div class="field">
             <label for="f-email">Email <span class="field__optional">(opcional, te enviamos tu oferta)</span></label>

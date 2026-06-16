@@ -98,75 +98,6 @@
     return p;
   }
 
-  // CP español → código de concesionario Salvador Caetano (mismos códigos CRM que Dongfeng).
-  // Cobertura nacional: las 52 provincias asignadas al concesionario más cercano,
-  // para que ningún lead salga sin Dealership_Code. Rangos específicos sobrescriben
-  // el default provincial (Sabadell y Manresa dentro de 08, Majadahonda dentro de 28).
-  function dealerCodeFromCP(cp) {
-    const digits = (cp || '').replace(/\D/g, '');
-    if (digits.length < 2) return '';
-    const n = parseInt(digits, 10);
-    if (n >= 8200 && n <= 8208) return 'DE00060002';   // Sabadell
-    if (n >= 8240 && n <= 8243) return 'DE00820006';   // Manresa (Full Traction)
-    if (n >= 28220 && n <= 28229) return 'DE05710004'; // Majadahonda
-    const province = digits.slice(0, 2);
-    const provinceToDealer = {
-      '01': 'DE01100014', // Álava → Bilbao
-      '02': 'DE00070002', // Albacete → Murcia
-      '03': 'DE00110011', // Alicante
-      '04': 'DE01050013', // Almería → Málaga
-      '05': 'DE00050002', // Ávila → Madrid
-      '06': 'DE00110001', // Badajoz → Sevilla
-      '07': 'DE00080001', // Baleares → Palma de Mallorca
-      '08': 'DE05840006', // Barcelona
-      '09': 'DE00090001', // Burgos → Valladolid
-      '10': 'DE00110001', // Cáceres → Sevilla
-      '11': 'DE00110001', // Cádiz → Sevilla
-      '12': 'DE06350009', // Castellón → Gandía
-      '13': 'DE00050002', // Ciudad Real → Madrid
-      '14': 'DE00110001', // Córdoba → Sevilla
-      '15': 'DE00110012', // A Coruña
-      '16': 'DE00160001', // Cuenca → Guadalajara
-      '17': 'DE00180001', // Girona
-      '18': 'DE01050013', // Granada → Málaga
-      '19': 'DE00160001', // Guadalajara
-      '20': 'DE01100014', // Gipuzkoa → Bilbao
-      '21': 'DE00110001', // Huelva → Sevilla
-      '22': 'DE00100004', // Huesca → Zaragoza
-      '23': 'DE01050013', // Jaén → Málaga
-      '24': 'DE00110005', // León → Oviedo
-      '25': 'DE00140001', // Lleida → Tarragona (Reus)
-      '26': 'DE00150001', // La Rioja → Navarra (Noáin)
-      '27': 'DE00110012', // Lugo → A Coruña
-      '28': 'DE00050002', // Madrid
-      '29': 'DE01050013', // Málaga
-      '30': 'DE00070002', // Murcia
-      '31': 'DE00150001', // Navarra
-      '32': 'DE00110012', // Ourense → A Coruña
-      '33': 'DE00110005', // Asturias → Oviedo
-      '34': 'DE00090001', // Palencia → Valladolid
-      '35': 'DE00780003', // Las Palmas (Canarias)
-      '36': 'DE00110012', // Pontevedra → A Coruña
-      '37': 'DE00090001', // Salamanca → Valladolid
-      '38': 'DE00090002', // Santa Cruz de Tenerife (Canarias)
-      '39': 'DE00070001', // Cantabria → Santander
-      '40': 'DE00050002', // Segovia → Madrid
-      '41': 'DE00110001', // Sevilla
-      '42': 'DE00100004', // Soria → Zaragoza
-      '43': 'DE00140001', // Tarragona (Reus)
-      '44': 'DE00100004', // Teruel → Zaragoza
-      '45': 'DE00050002', // Toledo → Madrid
-      '46': 'DE06350009', // Valencia → Gandía
-      '47': 'DE00090001', // Valladolid
-      '48': 'DE01100014', // Bizkaia → Bilbao
-      '49': 'DE00090001', // Zamora → Valladolid
-      '50': 'DE00100004', // Zaragoza
-      '51': 'DE01050013', // Ceuta → Málaga
-      '52': 'DE01050013'  // Melilla → Málaga
-    };
-    return provinceToDealer[province] || '';
-  }
-
   function buildPayload({ name, last_name, phone, cp, email, dealer }) {
     return {
       Name: name,
@@ -212,14 +143,14 @@
       const data = Object.fromEntries(new FormData(leadForm).entries());
       const { first, last } = splitName(data.name);
       const phone = normalizePhoneES(data.phone);
-      const cp = (data.cp || '').replace(/\D/g, '');
-      const dealer = dealerCodeFromCP(cp);
+      // El usuario elige el concesionario en el formulario; el CP ya no se pide.
+      const dealer = data.dealer || '';
 
       const payload = buildPayload({
         name: first,
         last_name: last,
         phone,
-        cp,
+        cp: '',
         email: data.email || '',
         dealer
       });
@@ -243,7 +174,6 @@
           address: {
             first_name: first,
             last_name: last,
-            postal_code: cp,
             country: 'ES'
           }
         }
