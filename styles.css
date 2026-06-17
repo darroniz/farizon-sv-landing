@@ -1806,7 +1806,8 @@ main > section { padding-block: clamp(var(--s-8), 6vw, var(--s-10)); }
   letter-spacing: 0.02em;
   color: var(--color-ink-2);
 }
-.field__optional {
+.field__optional,
+.field__hint {
   font-weight: 400;
   font-size: 12px;
   color: var(--color-ink-muted);
